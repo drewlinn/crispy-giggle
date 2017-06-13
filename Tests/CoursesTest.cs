@@ -89,6 +89,28 @@ namespace UniversityRegistrar
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void GetStudent_ReturnsAllCourseStudent_StudentList()
+    {
+     //Arrange
+     Course testCourse = new Course("Underwater Basketweaving", "UB107", "No", "N/A");
+     testCourse.Save();
+
+     Student testStudent1 = new Student("MaryAnne", new DateTime(2015, 05, 14), "Marine Biology");
+     testStudent1.Save();
+
+     Student testStudent2 = new Student("Garth", new DateTime(2014, 09, 05), "Literature");
+     testStudent2.Save();
+
+     //Act
+     testCourse.AddStudent(testStudent1);
+     List<Student> savedStudent = testCourse.GetStudent();
+     List<Student> testList = new List<Student> {testStudent1};
+
+     //Assert
+     Assert.Equal(testList, savedStudent);
+    }
+
     // [Fact]
     // public void Delete_DeletesCourseAssociationsFromDatabase_CourseList()
     // {
@@ -111,27 +133,6 @@ namespace UniversityRegistrar
     // }
 
 
-    // [Fact]
-    // public void GetStudent_ReturnsAllCourseStudent_TaskList()
-    // {
-    //  //Arrange
-    //  Course testCourse = new Course("eva");
-    //  testCourse.Save();
-    //
-    //  Student testStudent1 = new Student("portland", "New York", "today", "tomorrow", "on time");
-    //  testStudent1.Save();
-    //
-    //  Student testStudent2 = new Student("Seattle", "New York", "today", "tomorrow", "on time");
-    //  testStudent2.Save();
-    //
-    //  //Act
-    //  testCourse.AddStudent(testStudent1);
-    //  List<Student> savedStudent = testCourse.GetStudent();
-    //  List<Student> testList = new List<Student> {testStudent1};
-    //
-    //  //Assert
-    //  Assert.Equal(testList, savedStudent);
-    // }
 
 
     public void Dispose()
