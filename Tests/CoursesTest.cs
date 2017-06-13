@@ -111,26 +111,26 @@ namespace UniversityRegistrar
      Assert.Equal(testList, savedStudent);
     }
 
-    // [Fact]
-    // public void Delete_DeletesCourseAssociationsFromDatabase_CourseList()
-    // {
-    //   //Arrange
-    //   Student testStudent = new Student("Expandrew", new DateTime(2016, 10, 20), "Game Art & Design");
-    //   testStudent.Save();
-    //
-    //   Course testCourse = new Course("Sleepology", "SL101", "No", "F");
-    //   testCourse.Save();
-    //
-    //   //Act
-    //   testCourse.AddStudent(testStudent);
-    //   testCourse.Delete();
-    //
-    //   List<Course> resultStudentCourse = testStudent.GetCourse();
-    //   List<Course> testStudentCourse = new List<Course> {};
-    //
-    //   //Assert
-    //   Assert.Equal(testStudentCourse, resultStudentCourse);
-    // }
+    [Fact]
+    public void Delete_DeletesCourseAssociationsFromDatabase_CourseList()
+    {
+      //Arrange
+      Student testStudent = new Student("Expandrew", new DateTime(2016, 10, 20), "Game Art & Design");
+      testStudent.Save();
+
+      Course testCourse = new Course("Sleepology", "SL101", "No", "F");
+      testCourse.Save();
+
+      //Act
+      testCourse.AddStudent(testStudent);
+      testCourse.Delete();
+
+      List<Course> resultStudentCourse = testStudent.GetCourses();
+      List<Course> testStudentCourse = new List<Course> {};
+
+      //Assert
+      Assert.Equal(testStudentCourse, resultStudentCourse);
+    }
 
 
 
