@@ -50,6 +50,21 @@ namespace UniversityRegistrar
       Assert.Equal(testDepartment, foundDepartment);
     }
 
+    [Fact]
+    public void Test_Update_UpdatesDepartmentInDatabase()
+    {
+      //Arrange
+      Department testDepartment = new Department("Sleepology");
+      testDepartment.Save();
+      string newName= "Beat Poetry";
+      //Act
+      testDepartment.Update("Beat Poetry");
+      string result =testDepartment.GetName();
+
+      //Assert
+      Assert.Equal(newName, result);
+    }
+
     public void Dispose()
     {
       Department.DeleteAll();
