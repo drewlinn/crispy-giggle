@@ -50,6 +50,21 @@ namespace UniversityRegistrar
       Assert.Equal(testCourse, foundCourse);
     }
 
+    [Fact]
+    public void Test_Update_UpdatesCourseInDatabase()
+    {
+      //Arrange
+      Course testCourse = new Course("Sleepology", "SL101", "No", "F");
+      testCourse.Save();
+      string newGrade = "B+";
+      //Act
+      testCourse.Update("Sleepology", "SL101", "No", "B+");
+      string result =testCourse.GetGrade();
+
+      //Assert
+      Assert.Equal(newGrade, result);
+    }
+
     // [Fact]
     // public void Delete_DeletesCourseAssociationsFromDatabase_Courseist()
     // {

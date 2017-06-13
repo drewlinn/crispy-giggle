@@ -158,6 +158,35 @@ namespace UniversityRegistrar
      return foundCourse;
     }
 
+    public void Update(string name, string course_number, string completion, string grade)
+    {
+    SqlConnection conn = DB.Connection();
+    conn.Open();
+
+    SqlCommand cmd = new SqlCommand("UPDATE courses SET name = @name, course_number = @course_number, completion = @completion, grade = @grade WHERE id = @Id;", conn);
+
+    SqlParameter namePara = new SqlParameter("@name", name);
+    SqlParameter coursePara = new SqlParameter("@course_number", course_number);
+    SqlParameter completionPara = new SqlParameter("@completion", completion);
+    SqlParameter gradePara = new SqlParameter("@grade", grade);
+    SqlParameter idPara = new SqlParameter("@Id", this.GetId());
+
+    cmd.Parameters.Add(namePara);
+    cmd.Parameters.Add(coursePara);
+    cmd.Parameters.Add(completionPara);
+    cmd.Parameters.Add(gradePara);
+    cmd.Parameters.Add(idPara);
+
+    this._name = name;
+    this._course_number = course_number;
+    this._completion = completion;
+    this._grade = grade;
+    cmd.ExecuteNonQuery();
+    conn.Close();
+    }
+
+
+
     // public void Delete()
     // {
     //   SqlConnection conn = DB.Connection();
@@ -228,12 +257,12 @@ namespace UniversityRegistrar
     //     while(queryReader.Read())
     //     {
     //           int thisStudentId = queryReader.GetInt32(0);
-    //           string flying_from = queryReader.GetString(1);
-    //           string flying_to = queryReader.GetString(2);
-    //           string depart = queryReader.GetString(3);
-    //           string arrival = queryReader.GetString(4);
+    //           string name = queryReader.GetString(1);
+    //           string course_number = queryReader.GetString(2);
+    //           string completion = queryReader.GetString(3);
+    //           string grade = queryReader.GetString(4);
     //           string status = queryReader.GetString(5);
-    //           Student foundStudent = new Student(flying_from, flying_to, depart, arrival, status, thisStudentId);
+    //           Student foundStudent = new Student(name, course_number, completion, grade, status, thisStudentId);
     //           allStudent.Add(foundStudent);
     //     }
     //     if (queryReader != null)
