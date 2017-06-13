@@ -38,18 +38,18 @@ namespace UniversityRegistrar
       Assert.Equal(testList, result);
     }
 
-    // [Fact]
-    // public void Test_Find_FindsCourseInDatabase()
-    // {
-    //   //Arrange
-    //   Course testCourse = new Course("eva");
-    //   testCourse.Save();
-    //   //Act
-    //   Course foundCourse = Course.Find(testCourse.GetId());
-    //   //Assert
-    //   Assert.Equal(testCourse, foundCourse);
-    // }
-    //
+    [Fact]
+    public void Test_Find_FindsCourseInDatabase()
+    {
+      //Arrange
+      Course testCourse = new Course("Beat Poetry", "Lit501", "Yes", "B");
+      testCourse.Save();
+      //Act
+      Course foundCourse = Course.Find(testCourse.GetId());
+      //Assert
+      Assert.Equal(testCourse, foundCourse);
+    }
+
     // [Fact]
     // public void Delete_DeletesCourseAssociationsFromDatabase_Courseist()
     // {

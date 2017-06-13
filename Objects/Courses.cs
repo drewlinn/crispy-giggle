@@ -122,36 +122,42 @@ namespace UniversityRegistrar
      }
     }
 
-    // public static Course Find(int id)
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("SELECT * FROM airline_services WHERE id = @id;", conn);
-    //   SqlParameter airlineIdPara = new SqlParameter("@id", id.ToString());
-    //   cmd.Parameters.Add(airlineIdPara);
-    //   SqlDataReader rdr = cmd.ExecuteReader();
-    //
-    //   int foundid = 0;
-    //   string foundAirlineName = null;
-    //
-    //   while(rdr.Read())
-    //   {
-    //     foundid = rdr.GetInt32(0);
-    //     foundAirlineName = rdr.GetString(1);
-    //   }
-    //   Course foundCourse = new Course(foundAirlineName, foundid);
-    //   if (rdr != null)
-    //   {
-    //    rdr.Close();
-    //   }
-    //   if (conn != null)
-    //   {
-    //    conn.Close();
-    //   }
-    //  return foundCourse;
-    // }
-    //
+    public static Course Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM courses WHERE id = @id;", conn);
+      SqlParameter IdPara = new SqlParameter("@id", id.ToString());
+      cmd.Parameters.Add(IdPara);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      int foundid = 0;
+      string name = null;
+      string course_number = null;
+      string completion = null;
+      string grade = null;
+
+      while(rdr.Read())
+      {
+        foundid = rdr.GetInt32(0);
+        name = rdr.GetString(1);
+        course_number = rdr.GetString(2);
+        completion = rdr.GetString(3);
+        grade = rdr.GetString(4);
+      }
+      Course foundCourse = new Course(name, course_number, completion, grade, foundid);
+      if (rdr != null)
+      {
+       rdr.Close();
+      }
+      if (conn != null)
+      {
+       conn.Close();
+      }
+     return foundCourse;
+    }
+
     // public void Delete()
     // {
     //   SqlConnection conn = DB.Connection();
