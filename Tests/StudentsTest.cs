@@ -7,9 +7,9 @@ using System.Data.SqlClient;
 namespace UniversityRegistrar
 {
   [Collection("UniversityRegistrar")]
-  public class StudentsTest : IDisposable
+  public class StudentTest : IDisposable
   {
-    public StudentsTest()
+    public StudentTest()
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb; Initial Catalog=university_test; Integrated Security=SSPI;";
     }
@@ -18,10 +18,26 @@ namespace UniversityRegistrar
     public void Test_DatabaseEmptyAtFirst()
     {
      //Arrange, Act
-     int result = Students.GetAll().Count;
+     int result = Student.GetAll().Count;
 
      //Assert
      Assert.Equal(0, result);
+    }
+
+
+    [Fact]
+    public void Test_Save_SavesToDatabase()
+    {
+     //Arrange
+    Student testStudent = new Student("Kimlan", new DateTime(2017, 02, 28), "Software Engineering");
+
+     //Act
+     testStudent.Save();
+     List<Student> result =Student.GetAll();
+     List<Student> testList = new List<Student>{testStudent};
+
+     //Assert
+     Assert.Equal(testList, result);
     }
 
 
@@ -29,7 +45,7 @@ namespace UniversityRegistrar
 
     public void Dispose()
     {
-      Students.DeleteAll();
+      Student.DeleteAll();
     }
 
 

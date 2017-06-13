@@ -5,14 +5,14 @@ using System.Data.SqlClient;
 
 namespace UniversityRegistrar
 {
-  public class Students
+  public class Student
   {
     private int _id;
     private string _name;
     private DateTime _enrollment;
     private string _major;
 
-    public Students(string name, DateTime enrollment, string major, int id = 0)
+    public Student(string name, DateTime enrollment, string major, int id = 0)
     {
       _name = name;
       _enrollment = enrollment;
@@ -37,26 +37,26 @@ namespace UniversityRegistrar
       return _major;
     }
 
-    public override bool Equals(System.Object otherStudents)
+    public override bool Equals(System.Object otherStudent)
     {
-      if(!(otherStudents is Students))
+      if(!(otherStudent is Student))
       {
         return false;
       }
       else
       {
-        Students newStudents = (Students) otherStudents;
-        bool idEquality = (this.GetId() == newStudents.GetId());
-        bool nameEquality = (this.GetName() == newStudents.GetName());
-        bool enrollmentEquality = (this.GetEnrollment() == newStudents.GetEnrollment());
-        bool majorEquality = (this.GetMajor() == newStudents.GetMajor());
+        Student newStudent = (Student) otherStudent;
+        bool idEquality = (this.GetId() == newStudent.GetId());
+        bool nameEquality = (this.GetName() == newStudent.GetName());
+        bool enrollmentEquality = (this.GetEnrollment() == newStudent.GetEnrollment());
+        bool majorEquality = (this.GetMajor() == newStudent.GetMajor());
         return (idEquality && nameEquality && majorEquality && enrollmentEquality);
       }
     }
 
-    public static List<Students> GetAll()
+    public static List<Student> GetAll()
     {
-      List<Students> AllStudents = new List<Students>{};
+      List<Student> AllStudent = new List<Student>{};
       SqlConnection conn = DB.Connection();
       conn.Open();
 
@@ -68,8 +68,8 @@ namespace UniversityRegistrar
         string name = rdr.GetString(1);
         DateTime enrollment = rdr.GetDateTime(2);
         string major = rdr.GetString(3);
-        Students newStudent = new Students(name, enrollment, major, id);
-        AllStudents.Add(newStudent);
+        Student newStudent = new Student(name, enrollment, major, id);
+        AllStudent.Add(newStudent);
       }
       if (rdr != null)
       {
@@ -79,43 +79,39 @@ namespace UniversityRegistrar
       {
        conn.Close();
       }
-      return AllStudents;
+      return AllStudent;
     }
 
-    // public void Save()
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("INSERT INTO flights (flying_from, flying_to, depart, arrival, status) OUTPUT INSERTED.id VALUES (@flying_from, @flying_to, @depart, @arrival, @status);", conn);
-    //
-    //   SqlParameter fromPara = new SqlParameter("@flying_from", this.GetFlyingFrom());
-    //   SqlParameter toPara = new SqlParameter("@flying_to", this.GetFlyingTo());
-    //   SqlParameter departPara = new SqlParameter("@depart", this.GetDepart());
-    //   SqlParameter arrivePara = new SqlParameter("@arrival", this.GetArrivalDate());
-    //   SqlParameter StatusPara = new SqlParameter("@status", this.GetStatus());
-    //
-    //   cmd.Parameters.Add(fromPara);
-    //   cmd.Parameters.Add(toPara);
-    //   cmd.Parameters.Add(departPara);
-    //   cmd.Parameters.Add(arrivePara);
-    //   cmd.Parameters.Add(StatusPara);
-    //
-    //   SqlDataReader rdr = cmd.ExecuteReader();
-    //
-    //   while(rdr.Read())
-    //   {
-    //     this._id = rdr.GetInt32(0);
-    //   }
-    //   if(rdr != null)
-    //   {
-    //     rdr.Close();
-    //   }
-    //   if(conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    // }
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO students (name, enrollment, major) OUTPUT INSERTED.id VALUES (@name, @enrollment, @major);", conn);
+
+      SqlParameter namePara = new SqlParameter("@name", this.GetName());
+      SqlParameter enrollment = new SqlParameter("@enrollment", this.GetEnrollment());
+      SqlParameter majorPara = new SqlParameter("@major", this.GetMajor());
+
+      cmd.Parameters.Add(namePara);
+      cmd.Parameters.Add(enrollment);
+      cmd.Parameters.Add(majorPara);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
 
 
 
