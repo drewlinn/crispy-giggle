@@ -198,9 +198,59 @@ namespace UniversityRegistrar
       return courses;
     }
 
+    public void AddStudent(Student newStudent)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
 
+      SqlCommand cmd = new SqlCommand("INSERT INTO departments_students (departments_id, students_id) VALUES (@DepartmentsId, @StudentId);", conn);
 
+      SqlParameter departmentsIdParameter = new SqlParameter("@DepartmentsId", this.GetId());
+      SqlParameter studentIdParameter = new SqlParameter( "@StudentId", newStudent.GetId());
 
+      cmd.Parameters.Add(departmentsIdParameter);
+      cmd.Parameters.Add(studentIdParameter);
+      cmd.ExecuteNonQuery();
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    public List<Student> GetStudent()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT students.* FROM departments JOIN departments_students ON (departments.id = departments_students.departments_id) JOIN students ON (departments_students.students_id = students.id) WHERE departments.id = @departmentsId;", conn);
+      SqlParameter DepartmentIdParam = new SqlParameter("@departmentsId", this.GetId().ToString());
+
+      cmd.Parameters.Add(DepartmentIdParam);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      List<Student> students = new List<Student>{};
+
+      while(rdr.Read())
+      {
+        int studentId = rdr.GetInt32(0);
+        string name = rdr.GetString(1);
+        DateTime enrollment = rdr.GetDateTime(2);
+        string major = rdr.GetString(3);
+      Student newStudent = new Student(name, enrollment, major, studentId);
+        students.Add(newStudent);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return students;
+    }
 
     public static void DeleteAll()
     {

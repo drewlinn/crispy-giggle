@@ -139,6 +139,7 @@ namespace UniversityRegistrar
     {
       Student.DeleteAll();
       Course.DeleteAll();
+      Department.DeleteAll();
     }
 
   }

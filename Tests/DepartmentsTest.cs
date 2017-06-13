@@ -111,8 +111,56 @@ namespace UniversityRegistrar
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Test_AddStudent_AddsStudentToDepartment()
+    {
+      //Arrange
+      Department testDepartment = new Department("Sociology");
+      testDepartment.Save();
+
+      Student testStudent = new Student("Expandrew", new DateTime(2016, 10, 20), "Game Art & Design");
+      testStudent.Save();
+
+      Student testStudent2 = new Student("Kimlan", new DateTime(2017, 02, 28), "Software Engineering");
+      testStudent2.Save();
+
+      //Act
+      testDepartment.AddStudent(testStudent);
+      testDepartment.AddStudent(testStudent2);
+
+      List<Student> result = testDepartment.GetStudent();
+      List<Student> testList = new List<Student>{testStudent, testStudent2};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
+    [Fact]
+    public void GetStudent_ReturnsAllDepartmentStudent_StudentList()
+    {
+     //Arrange
+     Department testDepartment = new Department("Medical Science");
+     testDepartment.Save();
+
+     Student testStudent1 = new Student("MaryAnne", new DateTime(2015, 05, 14), "Marine Biology");
+     testStudent1.Save();
+
+     Student testStudent2 = new Student("Garth", new DateTime(2014, 09, 05), "Literature");
+     testStudent2.Save();
+
+     //Act
+     testDepartment.AddStudent(testStudent1);
+     List<Student> savedStudent = testDepartment.GetStudent();
+     List<Student> testList = new List<Student> {testStudent1};
+
+     //Assert
+     Assert.Equal(testList, savedStudent);
+    }
+
     public void Dispose()
     {
+      Student.DeleteAll();
+      Course.DeleteAll();
       Department.DeleteAll();
     }
   }

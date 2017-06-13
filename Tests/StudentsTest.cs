@@ -140,6 +140,8 @@ namespace UniversityRegistrar
     public void Dispose()
     {
       Student.DeleteAll();
+      Course.DeleteAll();
+      Department.DeleteAll();
     }
 
 
