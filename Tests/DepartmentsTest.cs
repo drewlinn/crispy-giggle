@@ -65,6 +65,52 @@ namespace UniversityRegistrar
       Assert.Equal(newName, result);
     }
 
+    [Fact]
+    public void Test_AddCourse_AddsCourseToDepartment()
+    {
+      //Arrange
+      Department testDepartment = new Department("science");
+      testDepartment.Save();
+
+      Course testCourse = new Course("Sleepology", "SL101", "No", "F");
+      testCourse.Save();
+
+      Course testCourse2 = new Course("Underwater Basketweaving", "UB107", "No", "N/A");
+      testCourse2.Save();
+
+      //Act
+      testDepartment.AddCourse(testCourse);
+      testDepartment.AddCourse(testCourse2);
+
+      List<Course> result = testDepartment.GetCourses();
+      List<Course> testList = new List<Course>{testCourse, testCourse2};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
+    [Fact]
+    public void GetCourses_ReturnsAllDepartmentCourses_CourseList()
+    {
+      //Arrange
+      Department testDepartment = new Department("Expandrew");
+      testDepartment.Save();
+
+      Course testCourses1 = new Course("Underwater Basketweaving", "UB107", "No", "N/A");
+      testCourses1.Save();
+
+      Course testCourses2 = new Course("Sleepology", "SL101", "No", "F");
+      testCourses2.Save();
+
+      //Act
+      testDepartment.AddCourse(testCourses1);
+      List<Course> result = testDepartment.GetCourses();
+      List<Course> testList = new List<Course> {testCourses1};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
     public void Dispose()
     {
       Department.DeleteAll();
