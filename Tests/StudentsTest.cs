@@ -24,5 +24,14 @@ namespace UniversityRegistrar
      Assert.Equal(0, result);
     }
 
+
+
+
+    public void Dispose()
+    {
+      Students.DeleteAll();
+    }
+
+
   }
 }
