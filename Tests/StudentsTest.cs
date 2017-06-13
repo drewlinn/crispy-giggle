@@ -40,6 +40,20 @@ namespace UniversityRegistrar
      Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Test_Find_FindStudentInDatabase()
+    {
+      //Arrange
+      Student testStudent = new Student("Expandrew", new DateTime(2016, 10, 20), "Game Art & Design");
+      testStudent.Save();
+
+      //Act
+      Student foundStudent = Student.Find(testStudent.GetId());
+
+      //Assert
+      Assert.Equal(testStudent, foundStudent);
+    }
+
 
 
 

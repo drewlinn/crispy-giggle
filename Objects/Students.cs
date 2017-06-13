@@ -113,6 +113,78 @@ namespace UniversityRegistrar
       }
     }
 
+    public static Student Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM students WHERE id = @id;", conn);
+      SqlParameter idParameter = new SqlParameter("@id", id.ToString());
+
+      cmd.Parameters.Add(idParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      int foundId = 0;
+      string name = null;
+      DateTime enrollment = new DateTime();
+      string major = null;
+
+      while(rdr.Read())
+      {
+        foundId = rdr.GetInt32(0);
+        name = rdr.GetString(1);
+        enrollment = rdr.GetDateTime(2);
+        major = rdr.GetString(3);
+      }
+      Student foundStudent = new Student(name, enrollment, major, foundId);
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundStudent;
+    }
+
+    // public List<Course> GetCourses()
+    // {
+    //   SqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //
+    //   SqlCommand cmd = new SqlCommand("SELECT tasks.* FROM categories JOIN categories_tasks ON (categories.id = categories_tasks.category_id) JOIN tasks ON (categories_tasks.task_id = tasks.id) WHERE categories.id = @CategoryId;", conn);
+    //   SqlParameter CategoryIdParam = new SqlParameter();
+    //   CategoryIdParam.ParameterName = "@CategoryId";
+    //   CategoryIdParam.Value = this.GetId().ToString();
+    //
+    //   cmd.Parameters.Add(CategoryIdParam);
+    //
+    //   SqlDataReader rdr = cmd.ExecuteReader();
+    //
+    //   List<Course> tasks = new List<Course>{};
+    //
+    //   while(rdr.Read())
+    //   {
+    //     int taskId = rdr.GetInt32(0);
+    //     string taskDescription = rdr.GetString(1);
+    //     Course newCourse = new Course(taskDescription, taskId);
+    //     tasks.Add(newCourse);
+    //   }
+    //
+    //   if (rdr != null)
+    //   {
+    //     rdr.Close();
+    //   }
+    //   if (conn != null)
+    //   {
+    //     conn.Close();
+    //   }
+    //   return tasks;
+    // }
+
+
+
 
 
     public static void DeleteAll()
