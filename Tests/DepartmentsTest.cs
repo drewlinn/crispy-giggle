@@ -23,20 +23,20 @@ namespace UniversityRegistrar
       //Assertf
     }
 
-    // [Fact]
-    // public void Test_Save_SaveDepartmentToDatabase()
-    // {
-    //   //Arrange
-    //   Department testDepartment = new Department("computer science");
-    //   testDepartment.Save();
-    //
-    //   //Act
-    //   List<Department> result = Department.GetAll();
-    //   List<Department> testList = new List<Department>{testDepartment};
-    //
-    //   //Assert
-    //   Assert.Equal(testList, result);
-    // }
+    [Fact]
+    public void Test_Save_SaveDepartmentToDatabase()
+    {
+      //Arrange
+      Department testDepartment = new Department("computer science");
+      testDepartment.Save();
+
+      //Act
+      List<Department> result = Department.GetAll();
+      List<Department> testList = new List<Department>{testDepartment};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
 
     public void Dispose()
     {
