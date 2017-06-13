@@ -55,6 +55,28 @@ namespace UniversityRegistrar
     }
 
     [Fact]
+    public void GetCourses_ReturnsAllStudentCourses_CourseList()
+    {
+      //Arrange
+      Student testStudent = new Student("Expandrew", new DateTime(2016, 10, 20), "Game Art & Design");
+      testStudent.Save();
+
+      Course testCourses1 = new Course("Underwater Basketweaving", "UB107", "No", "N/A");
+      testCourses1.Save();
+
+      Course testCourses2 = new Course("Sleepology", "SL101", "No", "F");
+      testCourses2.Save();
+
+      //Act
+      testStudent.AddCourse(testCourses1);
+      List<Course> result = testStudent.GetCourses();
+      List<Course> testList = new List<Course> {testCourses1};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
+    [Fact]
     public void Test_Update_UpdatesStudentInDatabase()
     {
       //Arrange
@@ -67,6 +89,27 @@ namespace UniversityRegistrar
 
       //Assert
       Assert.Equal(newMajor, result);
+    }
+
+    [Fact]
+    public void AddCourses_AddsCoursesToStudent_CoursesList()
+    {
+      //Arrange
+      Student testStudent = new Student("Steven", new DateTime(1984, 12, 25), "Gun Economics");
+      testStudent.Save();
+
+      Course testCourses = new Course("Sleepology", "SL101", "No", "F");
+      testCourses.Save();
+
+      //Act
+      testStudent.AddCourse(testCourses);
+
+      List<Course> result = testStudent.GetCourses();
+      List<Course> testList = new List<Course>{testCourses};
+
+      //Assert
+
+      Assert.Equal(testList, result);
     }
 
     // [Fact]
