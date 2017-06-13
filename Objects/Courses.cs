@@ -90,32 +90,38 @@ namespace UniversityRegistrar
       return AllCourse;
     }
 
-    // public void Save()
-    // {
-    //  SqlConnection conn = DB.Connection();
-    //  conn.Open();
-    //
-    //  SqlCommand cmd = new SqlCommand("INSERT INTO airline_services (name) OUTPUT INSERTED.id VALUES (@name);", conn);
-    //
-    //  SqlParameter namePara = new SqlParameter("@name", this.GetName());
-    //
-    //  cmd.Parameters.Add(namePara);
-    //  SqlDataReader rdr = cmd.ExecuteReader();
-    //
-    //  while(rdr.Read())
-    //  {
-    //    this._id = rdr.GetInt32(0);
-    //  }
-    //  if (rdr != null)
-    //  {
-    //    rdr.Close();
-    //  }
-    //  if (conn != null)
-    //  {
-    //    conn.Close();
-    //  }
-    // }
-    //
+    public void Save()
+    {
+     SqlConnection conn = DB.Connection();
+     conn.Open();
+
+     SqlCommand cmd = new SqlCommand("INSERT INTO courses (name, course_number, completion, grade) OUTPUT INSERTED.id VALUES (@name, @course_number, @completion, @grade);", conn);
+
+     SqlParameter namePara = new SqlParameter("@name", this.GetName());
+     SqlParameter coursePara = new SqlParameter("@course_number", this.GetCourseNumber());
+     SqlParameter completPara = new SqlParameter("@completion", this.GetCompletion());
+     SqlParameter gradePara = new SqlParameter("@grade", this.GetGrade());
+
+     cmd.Parameters.Add(namePara);
+     cmd.Parameters.Add(coursePara);
+     cmd.Parameters.Add(completPara);
+     cmd.Parameters.Add(gradePara);
+     SqlDataReader rdr = cmd.ExecuteReader();
+
+     while(rdr.Read())
+     {
+       this._id = rdr.GetInt32(0);
+     }
+     if (rdr != null)
+     {
+       rdr.Close();
+     }
+     if (conn != null)
+     {
+       conn.Close();
+     }
+    }
+
     // public static Course Find(int id)
     // {
     //   SqlConnection conn = DB.Connection();

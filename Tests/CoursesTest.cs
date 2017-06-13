@@ -23,21 +23,21 @@ namespace UniversityRegistrar
       //Assertf
     }
 
-    // [Fact]
-    // public void Test_Save_SaveCourseToDatabase()
-    // {
-    //   //Arrange
-    //   Course testCourse = new Course("eva");
-    //   testCourse.Save();
-    //
-    //   //Act
-    //   List<Course> result = Course.GetAll();
-    //   List<Course> testList = new List<Course>{testCourse};
-    //
-    //   //Assert
-    //   Assert.Equal(testList, result);
-    // }
-    //
+    [Fact]
+    public void Test_Save_SaveCourseToDatabase()
+    {
+      //Arrange
+      Course testCourse = new Course("circuit design", "CS171", "No", "N/A");
+      testCourse.Save();
+
+      //Act
+      List<Course> result = Course.GetAll();
+      List<Course> testList = new List<Course>{testCourse};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
     // [Fact]
     // public void Test_Find_FindsCourseInDatabase()
     // {
