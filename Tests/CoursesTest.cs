@@ -65,51 +65,52 @@ namespace UniversityRegistrar
       Assert.Equal(newGrade, result);
     }
 
+    [Fact]
+    public void Test_AddStudent_AddsStudentToCourse()
+    {
+      //Arrange
+      Course testCourse = new Course("Sleepology", "SL101", "No", "F");
+      testCourse.Save();
+
+      Student testStudent = new Student("Expandrew", new DateTime(2016, 10, 20), "Game Art & Design");
+      testStudent.Save();
+
+      Student testStudent2 = new Student("Kimlan", new DateTime(2017, 02, 28), "Software Engineering");
+      testStudent2.Save();
+
+      //Act
+      testCourse.AddStudent(testStudent);
+      testCourse.AddStudent(testStudent2);
+
+      List<Student> result = testCourse.GetStudent();
+      List<Student> testList = new List<Student>{testStudent, testStudent2};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
     // [Fact]
-    // public void Delete_DeletesCourseAssociationsFromDatabase_Courseist()
+    // public void Delete_DeletesCourseAssociationsFromDatabase_CourseList()
     // {
     //   //Arrange
-    //   Student testStudent = new Student("portland", "New York", "today", "tomorrow", "on time");
+    //   Student testStudent = new Student("Expandrew", new DateTime(2016, 10, 20), "Game Art & Design");
     //   testStudent.Save();
     //
-    //   Course testCourse = new Course("eva");
+    //   Course testCourse = new Course("Sleepology", "SL101", "No", "F");
     //   testCourse.Save();
     //
     //   //Act
     //   testCourse.AddStudent(testStudent);
     //   testCourse.Delete();
     //
-    //   List<Course> resultStudentCategories = testStudent.GetCourse();
-    //   List<Course> testStudentCategories = new List<Course> {};
+    //   List<Course> resultStudentCourse = testStudent.GetCourse();
+    //   List<Course> testStudentCourse = new List<Course> {};
     //
     //   //Assert
-    //   Assert.Equal(testStudentCategories, resultStudentCategories);
+    //   Assert.Equal(testStudentCourse, resultStudentCourse);
     // }
-    //
-    // [Fact]
-    // public void Test_AddStudent_AddsStudentToCourse()
-    // {
-    //  //Arrange
-    //  Course testCourse = new Course("eva");
-    //  testCourse.Save();
-    //
-    //  Student testStudent = new Student("portland", "New York", "today", "tomorrow", "on time");
-    //  testStudent.Save();
-    //
-    //  Student testStudent2 = new Student("Seattle", "New York", "today", "tomorrow", "on time");
-    //  testStudent2.Save();
-    //
-    //  //Act
-    //  testCourse.AddStudent(testStudent);
-    //  testCourse.AddStudent(testStudent2);
-    //
-    //  List<Student> result = testCourse.GetStudent();
-    //  List<Student> testList = new List<Student>{testStudent, testStudent2};
-    //
-    //  //Assert
-    //  Assert.Equal(testList, result);
-    // }
-    //
+
+
     // [Fact]
     // public void GetStudent_ReturnsAllCourseStudent_TaskList()
     // {

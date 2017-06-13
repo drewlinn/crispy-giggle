@@ -184,98 +184,77 @@ namespace UniversityRegistrar
     cmd.ExecuteNonQuery();
     conn.Close();
     }
+    //Add student's id and course's id to courses_students table
+    public void AddStudent(Student newStudent)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
 
+      SqlCommand cmd = new SqlCommand("INSERT INTO courses_students (courses_id, students_id) VALUES (@CourseId, @StudentId);", conn);
 
+      SqlParameter courseIdParameter = new SqlParameter("@CourseId", this.GetId());
+      SqlParameter studentIdParameter = new SqlParameter( "@StudentId", newStudent.GetId());
 
-    // public void Delete()
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("DELETE FROM airline_services WHERE id = @airlineId; DELETE FROM summary WHERE airline_services_id = @airlineId;", conn);
-    //   SqlParameter airlineIdParameter = new SqlParameter("@airlineId", this.GetId());
-    //
-    //   cmd.Parameters.Add(airlineIdParameter);
-    //   cmd.ExecuteNonQuery();
-    //
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    // }
-    //
-    // public void AddStudent(Student newStudent)
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("INSERT INTO summary (airline_services_id, student_id) VALUES (@AirlineId, @StudentId);", conn);
-    //
-    //   SqlParameter airlineIdParameter = new SqlParameter("@AirlineId", this.GetId());
-    //   SqlParameter studentIdParameter = new SqlParameter( "@StudentId", newStudent.GetId());
-    //
-    //   cmd.Parameters.Add(airlineIdParameter);
-    //   cmd.Parameters.Add(studentIdParameter);
-    //   cmd.ExecuteNonQuery();
-    //   if (conn != null)
-    //   {
-    //    conn.Close();
-    //   }
-    // }
-    //
-    // public List<Student> GetStudent()
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("SELECT student_id FROM summary WHERE airline_services_id = @airline_id;", conn);
-    //   SqlParameter airlineIdParameter = new SqlParameter("@airline_Id", this.GetId());
-    //
-    //   cmd.Parameters.Add(airlineIdParameter);
-    //   SqlDataReader rdr = cmd.ExecuteReader();
-    //
-    //   List<int> studentId = new List<int> {};
-    //   while(rdr.Read())
-    //   {
-    //     int studentId = rdr.GetInt32(0);
-    //     studentId.Add(studentId);
-    //   }
-    //   if (rdr != null)
-    //   {
-    //     rdr.Close();
-    //   }
-    //
-    //   List<Student> allStudent = new List<Student> {};
-    //   foreach (int studentId in studentId)
-    //   {
-    //     SqlCommand studentQuery = new SqlCommand("SELECT * FROM student WHERE id = @StudentId;", conn);
-    //
-    //     SqlParameter studentIdParameter = new SqlParameter("@StudentId", studentId);
-    //
-    //     studentQuery.Parameters.Add(studentIdParameter);
-    //     SqlDataReader queryReader = studentQuery.ExecuteReader();
-    //     while(queryReader.Read())
-    //     {
-    //           int thisStudentId = queryReader.GetInt32(0);
-    //           string name = queryReader.GetString(1);
-    //           string course_number = queryReader.GetString(2);
-    //           string completion = queryReader.GetString(3);
-    //           string grade = queryReader.GetString(4);
-    //           string status = queryReader.GetString(5);
-    //           Student foundStudent = new Student(name, course_number, completion, grade, status, thisStudentId);
-    //           allStudent.Add(foundStudent);
-    //     }
-    //     if (queryReader != null)
-    //     {
-    //       queryReader.Close();
-    //     }
-    //   }
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    //   return allStudent;
-    // }
+      cmd.Parameters.Add(courseIdParameter);
+      cmd.Parameters.Add(studentIdParameter);
+      cmd.ExecuteNonQuery();
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM courses WHERE id = @Id; DELETE FROM courses_students WHERE courses_id = @Id;", conn);
+      SqlParameter IdParameter = new SqlParameter("@Id", this.GetId());
+
+      cmd.Parameters.Add(IdParameter);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    public List<Student> GetStudent()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT students.* FROM courses JOIN courses_students ON (courses.id = courses_students.courses_id) JOIN students ON (courses_students.students_id = students.id) WHERE courses.id = @courseId;", conn);
+      SqlParameter CourseIdParam = new SqlParameter("@courseId", this.GetId().ToString());
+
+      cmd.Parameters.Add(CourseIdParam);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      List<Student> students = new List<Student>{};
+    
+      while(rdr.Read())
+      {
+        int studentId = rdr.GetInt32(0);
+        string name = rdr.GetString(1);
+        DateTime enrollment = rdr.GetDateTime(2);
+        string major = rdr.GetString(3);
+      Student newStudent = new Student(name, enrollment, major, studentId);
+        students.Add(newStudent);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return students;
+    }
 
 
 
