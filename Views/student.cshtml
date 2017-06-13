@@ -1,0 +1,13 @@
+<h3>This is @Model["students"].GetName()</h3>
+<h4>Courses:</h4>
+@foreach(var course in @Model["course"])
+{
+  <ul>
+    <li>@course.GetName()</li>
+  </ul>
+}
+<h4>Enrollment Date: @Model["students"].GetEnrollment()</h4>
+<h4>Student Major: @Model["students"].GetMajor()</h4>
+<p><a href="/students">View all students</a></p>
+<p><a href="/students/new">Add a another student</a></p>
+<p><a href="/">Return Home</a></p>

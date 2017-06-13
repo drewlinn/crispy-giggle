@@ -1,0 +1,30 @@
+<h1>@Model["department"].GetName(). </h1>
+@if(@Model["courses"].Count == 0)
+{
+  <p>This department currently has no courses</p>
+}
+else
+{
+  <ol>
+    @foreach (var course in @Model["courses"])
+    {
+      <li><a href="/courses/@course.GetId()">@course.GetName()</li>
+    }
+  </ol>
+}
+@if(@Model["students"].Count == 0)
+{
+  <p>This department currently has no students</p>
+}
+else
+{
+  <ol>
+    @foreach (var student in @Model["students"])
+    {
+      <li><a href="/students/@student.GetId()">@student.GetName()</li>
+    }
+  </ol>
+}
+<p><a href="/departments">View all departments</a></p>
+<p><a href="/departments/new">Add a new department</a></p>
+<p><a href="/">Return home</a></p>

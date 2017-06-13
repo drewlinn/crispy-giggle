@@ -1,0 +1,23 @@
+<h1>Add a new course</h1>
+<form action="/courses/new" method="post">
+  <label for="name">Course Name</label>
+  <input id="name" name="name" type="text">
+  <label for="number">Course Number</label>
+  <input id="number" name="number" type="text">
+  <label for="completion">Course Completion</label>
+  <input id="completion" name="completion" type="text">
+  <label for="grade">Course Grade</label>
+  <select name="grade">
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+      <option value="F">F</option>
+      <option value="Pass">Pass</option>
+      <option value="No Pass">No Pass</option>
+      <option value="N/A">Not Appliccable</option>
+  </select>
+  <button type="submit">Submit</button>
+</form>
+<a href="/">Go Back</a>
+<a href="/courses">View all courses</a>

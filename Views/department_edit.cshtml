@@ -1,0 +1,11 @@
+<h1>Edit Department</h1>
+<hr />
+<h2>Edit department: @Model.GetName()</h2>
+<form action="/departments/edit/@Model.GetId()" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <input name="departments-id" type="hidden" value="@Model.GetId()">
+  <label for="name">Department name</label>
+  <input id="name" name="name" type="text">
+  <button type="submit">Submit</button>
+</form>
+<h4><a href="/">Return home</a></h4>
