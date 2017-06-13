@@ -148,6 +148,31 @@ namespace UniversityRegistrar
       return foundStudent;
     }
 
+    public void Update(string name, DateTime enrollment, string major)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE students SET name = @name, enrollment = @enrollment, major = @major WHERE id = @Id;", conn);
+
+      SqlParameter namePara = new SqlParameter("@name", name);
+      SqlParameter enrollmentPara = new SqlParameter("@enrollment", enrollment);
+      SqlParameter majorPara = new SqlParameter("@major", major);
+      SqlParameter idPara = new SqlParameter("@Id", this.GetId());
+
+      cmd.Parameters.Add(namePara);
+      cmd.Parameters.Add(enrollmentPara);
+      cmd.Parameters.Add(majorPara);
+      cmd.Parameters.Add(idPara);
+
+      this._name = name;
+      this._enrollment = enrollment;
+      this._major = major;
+      cmd.ExecuteNonQuery();
+      conn.Close();
+    }
+
+
     // public List<Course> GetCourses()
     // {
     //   SqlConnection conn = DB.Connection();
@@ -181,6 +206,23 @@ namespace UniversityRegistrar
     //     conn.Close();
     //   }
     //   return tasks;
+    // }
+
+    // public void Delete()
+    // {
+    //   SqlConnection conn = DB.Connection();
+    //   conn.Open();
+    //
+    //   SqlCommand cmd = new SqlCommand("DELETE FROM student WHERE id = @studentId; DELETE FROM summary WHERE student_id = @studentId;", conn);
+    //   SqlParameter studentIdParameter = new SqlParameter("@studentId", this.GetId());
+    //
+    //   cmd.Parameters.Add(studentIdParameter);
+    //   cmd.ExecuteNonQuery();
+    //
+    //   if (conn != null)
+    //   {
+    //    conn.Close();
+    //   }
     // }
 
 
