@@ -230,26 +230,22 @@ namespace UniversityRegistrar
       }
     }
 
-    // public void Delete()
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //
-    //   SqlCommand cmd = new SqlCommand("DELETE FROM student WHERE id = @studentId; DELETE FROM summary WHERE student_id = @studentId;", conn);
-    //   SqlParameter studentIdParameter = new SqlParameter("@studentId", this.GetId());
-    //
-    //   cmd.Parameters.Add(studentIdParameter);
-    //   cmd.ExecuteNonQuery();
-    //
-    //   if (conn != null)
-    //   {
-    //    conn.Close();
-    //   }
-    // }
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
 
+      SqlCommand cmd = new SqlCommand("DELETE FROM students WHERE id = @studentId; DELETE FROM courses_students WHERE students_id = @studentId;", conn);
+      SqlParameter studentIdParameter = new SqlParameter("@studentId", this.GetId());
 
+      cmd.Parameters.Add(studentIdParameter);
+      cmd.ExecuteNonQuery();
 
-
+      if (conn != null)
+      {
+       conn.Close();
+      }
+    }
 
     public static void DeleteAll()
     {
