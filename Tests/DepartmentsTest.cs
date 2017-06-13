@@ -157,6 +157,35 @@ namespace UniversityRegistrar
      Assert.Equal(testList, savedStudent);
     }
 
+    [Fact]
+    public void Delete_DeletesDepartmentAssociationsFromDatabase_StudentsList()
+    {
+      //Arrange
+      Department testDepartment = new Department("Homeland Security");
+      testDepartment.Save();
+
+      Course testCourse = new Course("Sleepology", "SL101", "No", "F");
+      testCourse.Save();
+
+      Student testStudent = new Student("Steven", new DateTime(1984, 12, 25), "Gun Economics");
+      testStudent.Save();
+
+      //Act
+      testDepartment.AddCourse(testCourse);
+      testDepartment.AddStudent(testStudent);
+      testDepartment.Delete();
+
+      List<Course> resultDepartmentCourses = testDepartment.GetCourses();
+      List<Course> testDepartmentCourses = new List<Course> {};
+
+      List<Student> resultDepartmentStudents = testDepartment.GetStudent();
+      List<Student> testDepartmentStudents = new List<Student> {};
+
+      //Assert
+      Assert.Equal(testDepartmentStudents, resultDepartmentStudents);
+      Assert.Equal(testDepartmentCourses, resultDepartmentCourses);
+    }
+
     public void Dispose()
     {
       Student.DeleteAll();

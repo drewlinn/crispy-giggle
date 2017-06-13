@@ -252,6 +252,23 @@ namespace UniversityRegistrar
       return students;
     }
 
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM departments WHERE id = @Id; DELETE FROM departments_students WHERE departments_id = @Id; DELETE FROM departments_courses WHERE departments_id = @Id;", conn);
+      SqlParameter IdParameter = new SqlParameter("@Id", this.GetId());
+
+      cmd.Parameters.Add(IdParameter);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
     public static void DeleteAll()
     {
      SqlConnection conn = DB.Connection();
