@@ -6,6 +6,13 @@
   <input id="enrollment" name="enrollment" type="Date">
   <label for="major">Student's Major</label>
   <input id="major" name="major" type="text">
+  <label for="course_id">Courses</label>
+  <select name="course_id">
+    @foreach(var course in Model)
+    {
+      <option value="@course.GetId()">@course.GetName()</option>
+    }
+  </select>
   <button type="submit">Submit</button>
 </form>
 <a href="/students">View all students</a>

@@ -31,7 +31,8 @@ namespace UniversityRegistrar
         return View["course_form.cshtml"];
       };
       Get["/students/new"] = _ => {
-        return View["student_form.cshtml"];
+        List<Course> AllCourses = Course.GetAll();
+        return View["student_form.cshtml", AllCourses];
       };
       Post["/departments/new"] = _ => {
         Department newDepartment = new Department (Request.Form["name"]);
@@ -45,7 +46,11 @@ namespace UniversityRegistrar
       };
       Post["/students/new"] = _ => {
         Student newStudent = new Student (Request.Form["name"], Request.Form["enrollment"], Request.Form["major"]);
+        int courseId = Request.Form["course_id"];
+        Course SelectedCourse = Course.Find(courseId);
         newStudent.Save();
+        newStudent.AddCourse(SelectedCourse);
+        SelectedCourse.AddStudent(newStudent);
         return View["success.cshtml"];
       };
       //READ
